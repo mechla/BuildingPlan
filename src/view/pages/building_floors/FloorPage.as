@@ -35,6 +35,7 @@ package view.pages.building_floors
 			renderRoomsView();
 			addRooms();
 			
+			
 			resize();
 			super.init();
 		}
@@ -45,8 +46,8 @@ package view.pages.building_floors
 					_floor_view.getChildAt(i).addEventListener(MouseEvent.MOUSE_OVER,roomHitTestOver);
 					_floor_view.getChildAt(i).addEventListener(MouseEvent.MOUSE_OUT,roomHitTestOut);
 					_floor_view.getChildAt(i).alpha = 0;
-					(_floor_view.getChildAt(i) as MovieClip).buttonMode =  true;
-					(_floor_view.getChildAt(i) as MovieClip).useHandCursor =  true;
+//					(_floor_view.getChildAt(i) as MovieClip).buttonMode =  true;
+//					(_floor_view.getChildAt(i) as MovieClip).useHandCursor =  true;
 					
 				}
 			}
@@ -97,9 +98,14 @@ package view.pages.building_floors
 		override protected function showRoom(e:MouseEvent):void{
 			view.View.instance().menu.setActiveMenu(ViewData.instance().menu_data[2]);
 			this.hide();
-			View.instance().pages.room_page.renderRoom(int(e.target.name));
+//			View.instance().pages.room_page.renderRoom(int(e.target.name));
 			View.instance().pages.room_page.show();
 			
+			var rooms:RoomsCollection = (Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection;
+			View.instance().pages.room_page.setRooms((Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection);
+			View.instance().pages.room_page.renderRooms((Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection);
+			View.instance().pages.room_page.setRoomId(int(e.target.name));
+			view.View.instance().pages.current_page = view.View.instance().pages.room_page;
 		}
 		
 		override protected function floorButtonOut(e:MouseEvent):void{
@@ -123,7 +129,7 @@ package view.pages.building_floors
 		private function changeFloorData(id:int):void{
 			_center_container_mask.x = 0;
 			renderRooms((Model.instance().floors[id] as FloorModel).rooms_collection);
-			TweenLite.to(_center_container_mask,.5,{scaleX:1, onComplete:tweenFinish});
+			TweenLite.to(_center_container_mask,.5,{scaleX:1,delay:.5, onComplete:tweenFinish});
 		}
 		private function tweenFinish():void{
 			_tween = false;

@@ -11,7 +11,7 @@ package
 		}
 		public function printStuff(data:Sprite):void{
 			_print.start();
-			_print.addPage(data);
+//			_print.addPage(data);
 			_print.send();
 			
 		}

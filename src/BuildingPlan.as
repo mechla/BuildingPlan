@@ -40,7 +40,8 @@ package
 			}
 		}
 		private function addBG():void{
-			_bg.setUrl("assets/The-Nova-Factory-and-Office-building-design-Exterior-2.jpg");
+//			_bg.setUrl("assets/BG/Bangkok_Night-ccbysa-BenhLieuSong-l.jpg");
+			_bg.setUrl("assets/BG/bangkok2.jpg");
 			_bg.loadPhoto(setSIzePhoto);
 			_bg.filters = [new BlurFilter()];
 			addChild(_bg);

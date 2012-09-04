@@ -15,6 +15,7 @@ package view.pages
 	import view.pages.contact.ContactPage;
 	import view.pages.gallery.GalleryPage;
 	import view.pages.main.MainPage;
+	import view.pages.building_floors.RoomDataPage;
 	
 	public class PagesController extends ShowObject
 	{
@@ -24,9 +25,11 @@ package view.pages
 		private var _building_page:BuildingPage;
 		private var _floors_page:FloorPage;
 		private var _room_page:RoomPage;
+		private var _data_page:RoomDataPage;
 		
 		private var _contact_page:ContactPage;
-		private var _current_page:String = ViewData.instance().menu_data[1];
+		private var _current_page_name:String = ViewData.instance().menu_data[1];
+		private var _current_page:BasePage;
 		public function PagesController(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
 			super(pClip, canShow);
@@ -34,6 +37,7 @@ package view.pages
 		public function init():void{
 			_main_page =  new MainPage(this,true);
 			_main_page.init();
+			
 			
 			_contact_page =  new ContactPage(this);
 			_contact_page.init();
@@ -50,36 +54,61 @@ package view.pages
 			_room_page =  new RoomPage(this);
 			_room_page.init();
 			
+			_data_page =  new RoomDataPage(this);
+			_data_page.init();
+			
+			_current_page = _building_page;
 			
 			
-	
+			
+			
 		}
 		public function showPage(name:String):void{
-//			if(_current_page != name){
-				_current_page == name;
-				hidePages();
-				//			private var _menu_data:Array =  ["Building Plan","Floors","Room Type","Gallery","Contact"];
-				switch (name){
-					case ViewData.instance().menu_data[0]:
+			//			if(_current_page != name){
+			_current_page_name == name;
+			
+			//			private var _menu_data:Array =  ["Building Plan","Floors","Room Type","Gallery","Contact"];
+			switch (name){
+				case ViewData.instance().menu_data[0]:
+					if(_current_page != _building_page){
+						_current_page.hide();
 						_building_page.show();
-						break;
-					case ViewData.instance().menu_data[1]: //Contact
+						_current_page = _building_page;
+					}
+					break;
+				case ViewData.instance().menu_data[1]: //Contact
+					if(_current_page != _floors_page){
+						_current_page.hide();
 						_floors_page.show();
-						break;
-					case ViewData.instance().menu_data[2]: //Contact
+						_current_page = _floors_page;
+					}
+					break;
+				case ViewData.instance().menu_data[2]: //Contact
+					if(_current_page != _room_page){
+						_current_page.hide();
 						_room_page.show();
-						break;
-					case ViewData.instance().menu_data[3]:
+						_current_page = _room_page;
+					}
+					break;
+				case ViewData.instance().menu_data[3]:
+					if(_current_page != _gallery_page){
+						_current_page.hide();
 						_gallery_page.show();
-						break;
-					case ViewData.instance().menu_data[4]: //Contact
+						_current_page = _gallery_page;
+					}
+					break;
+				case ViewData.instance().menu_data[4]: //Contact
+					if(_current_page != _contact_page){
+						_current_page.hide();
 						_contact_page.show();
-						break;
-					default:
-						break;
-					
-					//			["Home","Room Plan","Room Type","Gallery","Contact"];
-//				}
+						_current_page = _contact_page;
+					}
+					break;
+				default:
+					break;
+				
+				//			["Home","Room Plan","Room Type","Gallery","Contact"];
+				//				}
 			}
 		}
 		public function updateDataFromExel():void{
@@ -99,6 +128,7 @@ package view.pages
 			_floors_page.resize();
 			_room_page.resize();
 			_contact_page.resize();
+			data_page.resize();
 		}
 		
 		public function get gallery_page():GalleryPage
@@ -120,35 +150,55 @@ package view.pages
 		{
 			_main_page = value;
 		}
-
+		
 		public function get building_page():BuildingPage
 		{
 			return _building_page;
 		}
-
+		
 		public function set building_page(value:BuildingPage):void
 		{
 			_building_page = value;
 		}
-
+		
 		public function get floors_page():FloorPage
 		{
 			return _floors_page;
 		}
-
+		
 		public function set floors_page(value:FloorPage):void
 		{
 			_floors_page = value;
 		}
-
+		
 		public function get room_page():RoomPage
 		{
 			return _room_page;
 		}
-
+		
 		public function set room_page(value:RoomPage):void
 		{
 			_room_page = value;
+		}
+		
+		public function get data_page():RoomDataPage
+		{
+			return _data_page;
+		}
+		
+		public function set data_page(value:RoomDataPage):void
+		{
+			_data_page = value;
+		}
+		
+		public function get current_page():BasePage
+		{
+			return _current_page;
+		}
+		
+		public function set current_page(value:BasePage):void
+		{
+			_current_page = value;
 		}
 		
 		

@@ -19,12 +19,16 @@ package view.pages.building_floors
 		protected var _rooms_buttons:Sprite =  new Sprite();
 		private var _rooms_bg:room_list_bg =  new room_list_bg();
 		
+		protected var _rooms:RoomsCollection
+		protected var _room_id:int;
+		
 		public function BaseBuildingFloorPage(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
 			super(pClip, canShow);
 		}
 		public function init():void{
 			create_center_mask(_center_container.width,_center_container.height);
+//			_rooms  = ;
 		}
 		//FLORS
 		public function renderFloorsBuutons():void{
@@ -33,6 +37,7 @@ package view.pages.building_floors
 			for(var i:int = 1; i<Model.instance().floors.length;i++){
 				var floor:floor_button =  new floor_button();
 				floor.numbre_of_floor.text = (Model.instance().floors[i] as FloorModel).floor;
+				floor.gotoAndStop(1);
 				floor.y = 50 + (i-1)*50;
 				floor.x = 65;
 				_left_container.addChild(floor);
@@ -56,6 +61,7 @@ package view.pages.building_floors
 			
 		}
 		protected function showFloor(e:MouseEvent):void{
+			e.target.gotoAndStop(1);
 //			if(!_tween){
 //				_tween = true
 //				TweenLite.to(_changing_content,.5,{alpha:0, onComplete:changeFloorData,onCompleteParams:[int(e.target.name)]});
@@ -68,6 +74,8 @@ package view.pages.building_floors
 			_right_container.addChild(_rooms_buttons);
 		}
 		public function renderRooms(rooms:RoomsCollection):void{
+			_rooms = rooms;
+			
 			while(_rooms_buttons.numChildren>0)
 				_rooms_buttons.removeChildAt(0);
 			var index_y:int = 0;
@@ -78,6 +86,7 @@ package view.pages.building_floors
 				room.y = 75+index_y*30;
 				room.x = -155 +(35*index_x);
 				room.scaleX = room.scaleY = .6;
+				room.gotoAndStop(1);
 				_rooms_buttons.addChild(room);
 				room.name = i.toString();
 				room.mouseChildren =  false;
@@ -99,12 +108,12 @@ package view.pages.building_floors
 		
 		}
 		protected function showRoom(e:MouseEvent):void{
-			
+			e.target.gotoAndStop(2);
 		}
 		override protected function showCenter():void{
 			_center_container_mask.y = 0;
 			_center_container_mask.scaleY = 0;
-			TweenLite.to(_center_container_mask,1,{scaleY:1});
+			TweenLite.to(_center_container_mask,1,{scaleY:1,delay:1});
 		}
 		override protected function hideCenter():void{
 			TweenLite.to(_center_container_mask,.5,{scaleY:0});

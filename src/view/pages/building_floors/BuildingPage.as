@@ -41,8 +41,10 @@ package view.pages.building_floors
 				}
 			}
 			_center_container.addChild(_building);
+			trace("building",_building.width/2)
 			resize();
 			super.init();
+			
 		}
 		override protected function showFloor(e:MouseEvent):void{
 			view.View.instance().menu.setActiveMenu(ViewData.instance().menu_data[1]);
@@ -51,6 +53,7 @@ package view.pages.building_floors
 				this.hide();
 				view.View.instance().pages.floors_page.renderRooms((Model.instance().floors[index] as FloorModel).rooms_collection);
 				view.View.instance().pages.floors_page.show();
+				view.View.instance().pages.current_page = view.View.instance().pages.floors_page;
 			}catch(e:Error){}
 		}
 		private function onMouseOver(e:MouseEvent):void{

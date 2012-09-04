@@ -47,7 +47,7 @@ package view.menu
 				this.x = 10;
 			else
 				this.x =  ViewData.instance().stage_size.x/2-this.width/2;
-			this.y = 30;
+			this.y = 10;
 		}
 	}
 }

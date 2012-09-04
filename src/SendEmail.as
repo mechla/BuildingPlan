@@ -12,12 +12,12 @@ package
 		public function SendEmail()
 		{
 		}
-		public function sendMessage(email:String):void
+		public function sendMessage(email:String,text:String):void
 		{
 			var variables:URLVariables=new URLVariables();
 			variables.name="Building presentation";
 			variables.email=email;
-			variables.message="message from flash application";
+			variables.message=text;
 			
 			var request:URLRequest=new URLRequest();
 			request.url='http://mechla.sry.pl/BP/email_send.php';

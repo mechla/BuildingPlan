@@ -23,11 +23,11 @@ package view.menu
 //			_bg.width =  this.width;
 		}
 		private function addLogo():void{
-			_logo.setUrl("assets/logo2.jpg");
-			_logo.loadPhoto();
-			_logo.x = _position_x+10;
-			_logo.y = -50;
-			_logo.scaleX = _logo.scaleY = .4;
+//			_logo.setUrl("assets/logo2.jpg");
+//			_logo.loadPhoto();
+//			_logo.x = _position_x+10;
+//			_logo.y = -50;
+//			_logo.scaleX = _logo.scaleY = .4;
 //			addChild(_logo);
 			resize();
 		}
