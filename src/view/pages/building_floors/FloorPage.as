@@ -25,6 +25,9 @@ package view.pages.building_floors
 		private var _floor_view:floor_view_new =  new floor_view_new();
 		private var _tween:Boolean = false;
 		
+		private var _current_floor_no:int = 1;
+		private var _current_room_no:int = 1;
+		
 		public function FloorPage(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
 			super(pClip, canShow);
@@ -55,6 +58,15 @@ package view.pages.building_floors
 		private function roomHitTestClicked(e:MouseEvent):void{
 			var name :String= e.target.name.replace("m","");
 			try{
+				view.View.instance().menu.setActiveMenu(ViewData.instance().menu_data[2]);
+				this.hide();
+				//			View.instance().pages.room_page.renderRoom(int(e.target.name));
+				View.instance().pages.room_page.show();
+				
+				View.instance().pages.room_page.setRooms((Model.instance().floors[int(name)] as FloorModel).rooms_collection);
+				View.instance().pages.room_page.renderRooms((Model.instance().floors[int(name)] as FloorModel).rooms_collection);
+				View.instance().pages.room_page.setRoomId(int(name));
+				view.View.instance().pages.current_page = view.View.instance().pages.room_page;
 				
 			}
 			catch(e:Error){}
@@ -101,10 +113,11 @@ package view.pages.building_floors
 //			View.instance().pages.room_page.renderRoom(int(e.target.name));
 			View.instance().pages.room_page.show();
 			
-			var rooms:RoomsCollection = (Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection;
-			View.instance().pages.room_page.setRooms((Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection);
-			View.instance().pages.room_page.renderRooms((Model.instance().floors[int(e.target.name)] as FloorModel).rooms_collection);
-			View.instance().pages.room_page.setRoomId(int(e.target.name));
+			var rooms:RoomsCollection = (Model.instance().floors[_current_floor_no] as FloorModel).rooms_collection;
+			View.instance().pages.room_page.setRooms((Model.instance().floors[_current_floor_no] as FloorModel).rooms_collection);
+			View.instance().pages.room_page.renderRooms((Model.instance().floors[_current_floor_no] as FloorModel).rooms_collection);
+			_current_room_no = int(e.target.name)
+			View.instance().pages.room_page.setRoomId(_current_room_no);
 			view.View.instance().pages.current_page = view.View.instance().pages.room_page;
 		}
 		
@@ -127,6 +140,7 @@ package view.pages.building_floors
 			}
 		}
 		private function changeFloorData(id:int):void{
+			_current_floor_no = id;
 			_center_container_mask.x = 0;
 			renderRooms((Model.instance().floors[id] as FloorModel).rooms_collection);
 			TweenLite.to(_center_container_mask,.5,{scaleX:1,delay:.5, onComplete:tweenFinish});

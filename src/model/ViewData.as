@@ -42,7 +42,10 @@ package model
 		public function set stage_size(value:Point):void
 		{
 			if(value.x < _min_size.x)
-				value.x = _min_size.x
+				value.x = _min_size.x;
+			if(value.y < _min_size.y)
+				value.y = _min_size.y;
+					
 			_stage_size = value;
 		}
 		

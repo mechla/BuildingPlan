@@ -39,7 +39,7 @@ package view.pages.building_floors
 				floor.numbre_of_floor.text = (Model.instance().floors[i] as FloorModel).floor;
 				floor.gotoAndStop(1);
 				floor.y = 50 + (i-1)*50;
-				floor.x = 65;
+				floor.x = 35;
 				_left_container.addChild(floor);
 				floor.name = i.toString();
 				floor.mouseChildren = false;
@@ -84,7 +84,7 @@ package view.pages.building_floors
 				var room:floor_button =  new floor_button();
 				room.numbre_of_floor.text = (rooms[i] as RoomModel).type;
 				room.y = 75+index_y*30;
-				room.x = -155 +(35*index_x);
+				room.x = -110 +(35*index_x);
 				room.scaleX = room.scaleY = .6;
 				room.gotoAndStop(1);
 				_rooms_buttons.addChild(room);

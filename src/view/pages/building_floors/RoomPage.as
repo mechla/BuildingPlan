@@ -6,6 +6,8 @@ package view.pages.building_floors
 	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
 	
+	import model.Model;
+	import model.building.FloorModel;
 	import model.building.RoomsCollection;
 	
 	import view.View;
@@ -24,6 +26,9 @@ package view.pages.building_floors
 			renderCenter();
 			addRooms();
 			resize();
+			_rooms = (Model.instance().floors[1] as FloorModel).rooms_collection;
+			renderRooms((Model.instance().floors[1] as FloorModel).rooms_collection);
+			_room_id = 1;
 			super.init();
 			
 		}

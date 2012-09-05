@@ -5,6 +5,7 @@ package view.menu
 	import com.greensock.easing.Back;
 	
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	
 	import model.ViewData;
 	
@@ -13,9 +14,11 @@ package view.menu
 	
 	public class BaseMenu extends ShowObject
 	{
-		protected var _position_x:int = 0;
+		protected var _position_x:int = 50;
 		protected var _buttons:Array  = ViewData.instance().menu_data;
 		protected var _menu_buttons:Array =  new Array();
+		
+		protected var _bg:Sprite =  new Sprite();
 	
 		public function BaseMenu(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
@@ -26,6 +29,7 @@ package view.menu
 				var menu_button:MenuButton =  new MenuButton(this,true);
 				menu_button.init(_buttons[i]);
 				menu_button.name = _buttons[i];
+				
 				menu_button.x = _position_x;
 				_position_x = _position_x + menu_button.getWidth()+30;
 				addChild(menu_button);
@@ -33,6 +37,12 @@ package view.menu
 				
 			}
 			resize();
+		}
+		public function addBg():void{
+			_bg.graphics.beginFill(0x000000,.8);
+			_bg.graphics.drawRect(0,0,10,30);
+			_bg.graphics.endFill();
+			addChild(_bg);
 		}
 	    public function setActiveMenu(name:String):void{
 			for(var i:int = 0; i<_menu_buttons.length;i++){
@@ -43,11 +53,12 @@ package view.menu
 			
 		}
 		public function resize():void{
-			if(ViewData.instance().stage_size.x/2-this.width/2 < 10) 
-				this.x = 10;
-			else
-				this.x =  ViewData.instance().stage_size.x/2-this.width/2;
-			this.y = 10;
+////			if(ViewData.instance().stage_size.x/2-this.width/2 < 10) 
+//				this.x = 10;
+//			else
+//				this.x =  ViewData.instance().stage_size.x/2-this.width/2;
+			_bg.width =  ViewData.instance().stage_size.x;
+			this.y = 20;
 		}
 	}
 }

@@ -10,14 +10,14 @@ package view.menu
 	{
 		protected var _logo:PhotoLoader =  new PhotoLoader();
 //		protected var _bg:menu_black_strip =  new menu_black_strip();
-		protected var _bg:menu_bg = new menu_bg();
+//		protected var _bg:menu_bg = new menu_bg();
 		public function MainMenu(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
 			super(pClip, canShow);
 		}
 		override public function init():void{
 //			_bg.filters = [new GlowFilter(0x000000,.8,10,10,5)];
-			addChild(_bg);
+			addBg();
 			super.init();
 			addLogo();
 //			_bg.width =  this.width;

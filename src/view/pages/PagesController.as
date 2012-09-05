@@ -7,15 +7,16 @@ package view.pages
 	
 	import model.Model;
 	import model.ViewData;
+	import model.building.FloorModel;
 	
 	import view.ShowObject;
 	import view.pages.building_floors.BuildingPage;
 	import view.pages.building_floors.FloorPage;
+	import view.pages.building_floors.RoomDataPage;
 	import view.pages.building_floors.RoomPage;
 	import view.pages.contact.ContactPage;
 	import view.pages.gallery.GalleryPage;
 	import view.pages.main.MainPage;
-	import view.pages.building_floors.RoomDataPage;
 	
 	public class PagesController extends ShowObject
 	{
@@ -52,7 +53,7 @@ package view.pages
 			_floors_page.init();
 			
 			_room_page =  new RoomPage(this);
-			_room_page.init();
+//			_room_page.init();
 			
 			_data_page =  new RoomDataPage(this);
 			_data_page.init();
@@ -113,7 +114,11 @@ package view.pages
 		}
 		public function updateDataFromExel():void{
 			_floors_page.renderFloorsBuutons();
+			_floors_page.renderRooms((Model.instance().floors[1] as FloorModel).rooms_collection);
+			
+			
 			_building_page.renderFloorsBuutons();
+			_room_page.init();
 		}
 		public function hidePages():void{
 			_gallery_page.hide();
@@ -128,7 +133,7 @@ package view.pages
 			_floors_page.resize();
 			_room_page.resize();
 			_contact_page.resize();
-			data_page.resize();
+			_data_page.resize();
 		}
 		
 		public function get gallery_page():GalleryPage
