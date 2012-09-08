@@ -16,7 +16,7 @@ package view.pages.main
 		public function init():void{
 			_loader.y =  0;
 //			_loader.alpha = .5;
-			_center_container.addChild(_loader);
+			addToCenter(_loader);
 			resize();
 	
 		}

@@ -34,7 +34,7 @@ package view.pages.building_floors
 		}
 		override public function init():void{
 			
-			_center_container.addChild(_floor_view);
+			addToCenter(_floor_view);
 			renderRoomsView();
 			addRooms();
 			
@@ -136,17 +136,21 @@ package view.pages.building_floors
 				_tween = true
 				
 				_center_container_mask.scaleX = 1;
-				TweenLite.to(_center_container_mask,.5,{scaleX:0,x:800,onComplete:changeFloorData,onCompleteParams:[int(e.target.name)]});
+				TweenLite.to(_center_container_mask,.3,{scaleX:0,x:800,onComplete:changeFloorData,onCompleteParams:[int(e.target.name)]});
 			}
 		}
 		private function changeFloorData(id:int):void{
 			_current_floor_no = id;
 			_center_container_mask.x = 0;
 			renderRooms((Model.instance().floors[id] as FloorModel).rooms_collection);
-			TweenLite.to(_center_container_mask,.5,{scaleX:1,delay:.5, onComplete:tweenFinish});
+			TweenLite.to(_center_container_mask,.3,{scaleX:1,delay:.25, onComplete:tweenFinish});
 		}
 		private function tweenFinish():void{
 			_tween = false;
 		}
+//		override public function show(...args):void{
+//			view.View.instance().bg.changePhoto(1);
+//			super.show();
+//		}
 	}
 }

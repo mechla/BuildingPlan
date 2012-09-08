@@ -40,8 +40,8 @@ package view.pages.building_floors
 					(_building.getChildAt(i) as MovieClip).useHandCursor =  true;
 				}
 			}
-			_center_container.addChild(_building);
-			trace("building",_building.width/2)
+			addToCenter(_building);
+//			trace("building",_building.width/2)
 			resize();
 			super.init();
 			
@@ -77,7 +77,7 @@ package view.pages.building_floors
 		}
 	
 		override protected function floorButtonOut(e:MouseEvent):void{
-			TweenMax.to(e.target,0,{colorMatrixFilter:{brightness:1}});
+			TweenMax.to(e.target,.05,{colorMatrixFilter:{brightness:1}});
 			try{
 			_building.getChildByName("floor_"+e.target.name).alpha  = 0;
 			}catch(e:Error){}
@@ -85,12 +85,16 @@ package view.pages.building_floors
 		}
 		override protected function floorButtonOver(e:MouseEvent):void{
 			trace(e.target.name);
-			TweenMax.to(e.target,0,{colorMatrixFilter:{brightness:1.5}});
+			TweenMax.to(e.target,.05,{colorMatrixFilter:{brightness:1.5}});
 			try{
 			_building.getChildByName("floor_"+e.target.name).alpha = .3;
 			}catch(e:Error){}
 			
 		}
+//		override public function show(...args):void{
+//			view.View.instance().bg.changePhoto(0);
+//			super.show();
+//		}
 	
 	
 	}

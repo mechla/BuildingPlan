@@ -19,7 +19,7 @@ package view.menu
 		protected var _menu_buttons:Array =  new Array();
 		
 		protected var _bg:Sprite =  new Sprite();
-	
+		
 		public function BaseMenu(pClip:DisplayObjectContainer, canShow:Boolean=false)
 		{
 			super(pClip, canShow);
@@ -39,24 +39,23 @@ package view.menu
 			resize();
 		}
 		public function addBg():void{
-			_bg.graphics.beginFill(0x000000,.8);
+			_bg.graphics.beginFill(0x000000,.6);
 			_bg.graphics.drawRect(0,0,10,30);
 			_bg.graphics.endFill();
 			addChild(_bg);
 		}
-	    public function setActiveMenu(name:String):void{
+		public function setActiveMenu(name:String):void{
 			for(var i:int = 0; i<_menu_buttons.length;i++){
-				if(_menu_buttons[i].y != 0)
-					TweenLite.to(_menu_buttons[i], .5, { y:0, ease:Back.easeIn});
+				(_menu_buttons[i] as MenuButton).setInactive()
 			}
-			TweenLite.to(this.getChildByName(name), .5, { y:15, ease:Back.easeOut});
+			try{
+				(this.getChildByName(name) as MenuButton).setActive();
+			}
+			catch(e:Error){}
 			
 		}
 		public function resize():void{
-////			if(ViewData.instance().stage_size.x/2-this.width/2 < 10) 
-//				this.x = 10;
-//			else
-//				this.x =  ViewData.instance().stage_size.x/2-this.width/2;
+			
 			_bg.width =  ViewData.instance().stage_size.x;
 			this.y = 20;
 		}

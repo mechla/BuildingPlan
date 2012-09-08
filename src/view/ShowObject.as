@@ -26,7 +26,7 @@ package view
 		{
 			addMe();
 			this.alpha=0;
-			TweenMax.to(this,0.3,{alpha:1,delay:.1,ease:Back.easeOut});
+			TweenMax.to(this,0.2,{alpha:1,delay:.1,ease:Back.easeOut});
 		}
 		public function addMe():void{
 			if (!this.stage)

@@ -22,7 +22,7 @@ package view.pages.building_floors
 		}
 		override public function init():void{
 			_room_vew.room_data_button.addEventListener(MouseEvent.CLICK,showRoomData);
-			_center_container.addChild(_room_vew);
+			addToCenter(_room_vew);
 			renderCenter();
 			addRooms();
 			resize();
@@ -65,17 +65,21 @@ package view.pages.building_floors
 		}
 		override protected function showRoom(e:MouseEvent):void{
 			_current_room = int(e.target.name);
-			TweenLite.to(_center_container_mask,.5,{scaleY:0, onComplete:swapRoom});
+			TweenLite.to(_center_container_mask,.3,{scaleY:0, onComplete:swapRoom});
 			
 		}
 		private function swapRoom():void{
 			_center_container_mask.y = 0;
 			_center_container_mask.scaleY = 0;
-			TweenLite.to(_center_container_mask,1,{scaleY:1,delay:.5});
+			TweenLite.to(_center_container_mask,.6,{scaleY:1,delay:.3});
 		}
 		public function setRoomId(id:int):void{
 			_current_room = id;
 		}
+//		override public function show(...args):void{
+//			view.View.instance().bg.changePhoto(2);
+//			super.show();
+//		}
 	}
 	
 }

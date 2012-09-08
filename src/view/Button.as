@@ -41,12 +41,12 @@ package view
 
 		private function mouseOverHandler(evt:MouseEvent):void
 		{
-			TweenMax.to(this,0,{colorMatrixFilter:{brightness:1.5}});
+			TweenMax.to(this,0.05,{colorMatrixFilter:{brightness:1.5}});
 		}
 		
 		private function mouseOutHandler(evt:MouseEvent):void
 		{
-			TweenMax.to(this,0,{colorMatrixFilter:{brightness:1.0}});
+			TweenMax.to(this,0.05,{colorMatrixFilter:{brightness:1.0}});
 		}
 		
 		public function get image():DisplayObject

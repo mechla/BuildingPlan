@@ -23,10 +23,11 @@ package view.pages.building_floors
 		private var _template_mask:Sprite =  new Sprite();
 		private var _room_model:RoomModel;
 		
-		private var _exit:Button =  new Button(_menu.exit);
+		//		private var _exit:Button =  new Button(_menu.exit);
 		private var _emial:Button =  new Button(_menu.email);
 		private var _print:Button =  new Button(_menu.print_doc);
 		private var _cal:Button =  new Button(_menu.calculat_image);
+		private var _magnify:Button =  new Button(_menu.maganify);
 		
 		private var _enter_email:send_post =  new send_post();
 		private var _send_email:Button =  new Button(_enter_email.send);
@@ -53,6 +54,8 @@ package view.pages.building_floors
 			_template_mask.graphics.beginFill(0xff0000);
 			_template_mask.graphics.drawRect(0,0,_template.width,ViewData.instance().stage_size.y-50);
 			_template_mask.graphics.endFill();
+			_template.buttonMode = true;
+			_template.useHandCursor =  true;
 			
 			_center_container.addChild(_template_mask);
 			_template.mask = _template_mask;
@@ -63,7 +66,7 @@ package view.pages.building_floors
 			
 		}
 		private function startDragTemplate(e:MouseEvent):void{
-			_template.startDrag(false,new Rectangle(0,0,0,-_template_mask.height));
+			_template.startDrag(false,new Rectangle((-_template.width+_template_mask.width)/2,0,(_template.width-_template_mask.width),-_template.height+_template_mask.height));
 			
 		}
 		private function stopDragTemplate(e:MouseEvent):void{
@@ -72,18 +75,39 @@ package view.pages.building_floors
 		}
 		private function addMenu():void{
 			_right_container.addChild(_menu);
-			_menu.addChild(_exit);
+			//			_menu.addChild(_exit);
 			_menu.addChild(_emial);
 			_menu.addChild(_print);
 			_menu.addChild(_cal);
+			_menu.addChild(_magnify);
 			_enter_email.addChild(_send_email);
 			
-			_exit.addEventListeners(exitDoc);
+			//			_exit.addEventListeners(exitDoc);
 			_emial.addEventListeners(emailDoc);
 			_print.addEventListeners(printDoc);
 			_cal.addEventListeners(calculate);
+			_magnify.addEventListeners(magnifyDoc);
 			
 			_send_email.addEventListeners(sendEmail);
+		}
+		private function magnifyDoc(e:MouseEvent):void{
+			_template.x = 0;
+			_template.y = 0;
+			_template_mask.x = 0;
+			_template_mask.y =0
+			if(_template.scaleX !=1){
+				_template.scaleX = _template.scaleY = 1;
+				_template_mask.width = ViewData.instance().stage_size.x;
+				_template_mask.x = _template.width/2 - _template_mask.width/2;
+			}
+			else{
+				_template.scaleX = _template.scaleY = .4;
+				_template_mask.width = _template.width;
+				_template_mask.x = 0;
+				
+			}
+			resize();
+			
 		}
 		private function exitDoc(e:MouseEvent):void{
 			this.hide();
@@ -114,7 +138,7 @@ package view.pages.building_floors
 			
 			
 			_email.sendMessage(_enter_email.email_input.text, _email_content);
-			TweenLite.to(_enter_email,1,{delay:2,alpha:0,onCoplete:removeEmail,onCompleteParams:[null]});
+			TweenLite.to(_enter_email,.5,{delay:2,alpha:0,onCoplete:removeEmail,onCompleteParams:[null]});
 		}
 		private function removeEmail(e:*):void{
 			_enter_email.exit.removeEventListener(MouseEvent.CLICK, removeEmail);
@@ -126,6 +150,7 @@ package view.pages.building_floors
 			print_data.printStuff(new Sprite());//_data as Sprite);
 		}
 		private function calculate(e:MouseEvent):void{
+			
 			_calculator.show();
 			
 		}
@@ -139,42 +164,50 @@ package view.pages.building_floors
 			updateTemplate();
 		}
 		public function updateTemplate():void{
+			var quotient:Number = 100 - int(_discount);
+			if(quotient<0)
+				quotient = 0;
 			_template.room_number.text.text = _room_model.room;
 			_template.room_type.text.text = _room_model.type;
 			_template.room_style.text.text = _room_model.style;
 			_template.room_area.text.text = _room_model.area;
-			_template.room_baht_sqm.text.text = _room_model.bath_per_square;
+			_template.room_baht_sqm.text.text = (int(_room_model.bath_per_square) * quotient).toString();
 			
-//			_template.unit_price.text.text = _room_model.unit_prise;
-//			_template.unit_discount.text.text = _room_model.discount;
-//			_template.net_room_baht_sqm.text.text = _room_model.bath_per_square
-//			_template.net_unit_price.text.text = _room_model.
-//				
-//			_template.reserve.text.text = _room_model.
-//			_template.contract.text.text = _room_model.
-//				
-//			_template.payment_month.text.text = _room_model.
-//			_template.balloon_month.text.text = _room_model.
-//			_template.payment.text.text = _room_model.
-//			_template.balloon.text.text = _room_model.
-//				
-//			_template.transfer.text.text = _room_model.
-//				
-//			_template.interest_10.text.text = _room_model.
-//			_template.interest_15.text.text = _room_model.
-//			_template.interest_20.text.text = _room_model.
-//			_template.interest_25.text.text = _room_model.
-//				
-//			_template.free_1.text.text = _room_model.
-//			_template.free_2.text.text = _room_model.
-//			_template.free_3.text.text = _room_model.
-//			_template.free_4.text.text = _room_model.
-//			_template.free_5.text.text = _room_model.
-//			_template.free_6.text.text = _room_model.
-//			
+			_template.unit_price.text.text = (int(_room_model.unit_prise) * quotient).toString();
+			_template.unit_discount.text.text = _discount.toString()+"%";//_room_model.unit_discount;
+			_template.net_room_baht_sqm.text.text = (int(_room_model.bath_per_square) * quotient).toString();
+			_template.net_unit_price.text.text = (int(_room_model.net_unit_price) * quotient).toString();
 			
-			_email_content = "discount: "+_discount.toString()+"/"+
-				"room no: "+_room_model.room;
+			//			_template.reserve.text.text = _room_model.
+			//			_template.contract.text.text = _room_model.
+			//				
+			//			_template.payment_month.text.text = _room_model.
+			//			_template.balloon_month.text.text = _room_model.
+			//			_template.payment.text.text = _room_model.
+			//			_template.balloon.text.text = _room_model.
+			//				
+			//			_template.transfer.text.text = _room_model.
+			//				
+			//			_template.interest_10.text.text = _room_model.
+			//			_template.interest_15.text.text = _room_model.
+			//			_template.interest_20.text.text = _room_model.
+			//			_template.interest_25.text.text = _room_model.
+			//				
+			//			_template.free_1.text.text = _room_model.
+			//			_template.free_2.text.text = _room_model.
+			//			_template.free_3.text.text = _room_model.
+			//			_template.free_4.text.text = _room_model.
+			//			_template.free_5.text.text = _room_model.
+			//			_template.free_6.text.text = _room_model.
+			//			
+			
+			_email_content = 
+				"discount: "+_discount.toString()+"/"+
+				"room no: "+_room_model.room.toString()+"/"+
+				"type: "+_room_model.type.toString()+"/"+
+				"area: "+_room_model.area.toString()+"/"+
+				"bath: "+_room_model.bath_per_square.toString()+"/"+
+				"unit price: "+_room_model.unit_prise.toString();
 		}
 		override public function show(...args):void{
 			super.show();

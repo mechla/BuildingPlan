@@ -22,6 +22,8 @@ package view.menu
 		public function init(text:String):void{
 			_name = text;
 			_button_mc.text.text = text;
+			_button_mc.text_active.text = text;
+			_button_mc.text_active.visible =  false;
 			_width = _button_mc.text.textWidth;
 			_button_mc.background.width = _width+10;
 			var button:Button =  new Button(_button_mc);
@@ -34,14 +36,19 @@ package view.menu
 				View.instance().pages.gallery_page.showGallery(_name);
 			}
 			else{
-				
 				View.instance().pages.showPage(_name);
 			}
-			
+		}
+		public function setActive():void{
+			_button_mc.text.visible = false;
+			_button_mc.text_active.visible =  true;
+		}
+		public function setInactive():void{
+			_button_mc.text.visible = true;
+			_button_mc.text_active.visible =  false;
 		}
 		public function getWidth():Number{
 			return _width;
 		}
-		
 	}
 }

@@ -1,5 +1,7 @@
 package view.pages.gallery
 {
+	import com.greensock.TweenLite;
+	
 	import flash.display.DisplayObjectContainer;
 	
 	import model.ViewData;
@@ -27,13 +29,14 @@ package view.pages.gallery
 			//			_bg.alpha = .9;
 			////			addChild(_bg);
 			
-			_photo_view =  new PhotoView(_center_container,true);
+			_photo_view =  new PhotoView();
 			
 			_photo_view.init();
+			addToCenter(_photo_view);
 			
-			_gallery_menu =  new GalleryMenu(_center_container,true);
-			_gallery_menu.init();
-			_gallery_menu.scaleX = _gallery_menu.scaleY = .8;
+//			_gallery_menu =  new GalleryMenu(_center_container,true);
+//			_gallery_menu.init();
+//			_gallery_menu.scaleX = _gallery_menu.scaleY = .8;
 			
 			_next_button = new Button( new next_buttn());
 			_next_button.addEventListeners(next);
@@ -47,6 +50,9 @@ package view.pages.gallery
 			resize();
 			
 			
+		}
+		override public function show(...args):void{
+			TweenLite.delayedCall(1.3,super.show);
 		}
 		private function next(e:*):void{
 			_photo_view.next();

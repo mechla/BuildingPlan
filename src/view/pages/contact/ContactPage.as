@@ -20,8 +20,11 @@ package view.pages.contact
 		public function init():void{
 //			_contact_form.x = 500;
 //			_center_container.addChild(_contact_form);
-			_center_container.addChild(_map);
+			addToCenter(_map);
 			resize();
+		}
+		override public function show(...args):void{
+			TweenLite.delayedCall(1.3,super.show);
 		}
 		
 	}
